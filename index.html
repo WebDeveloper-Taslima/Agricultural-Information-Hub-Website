@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriHub - Agricultural Information Hub</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --dark-color: #33691E;
+            --light-color: #F1F8E9;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Carousel Styles */
+        .carousel-item {
+            height: 600px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .carousel-caption {
+            z-index: 2;
+            bottom: 30%;
+        }
+        
+        .carousel-caption h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .carousel-caption p {
+            font-size: 1.25rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        
+        .section-title {
+            color: var(--dark-color);
+            font-weight: bold;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card .card-img-top {
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .crop-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .crop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .crop-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .guide-item {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .guide-item:hover {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .pest-control-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .contact-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3d8b40;
+            border-color: #3d8b40;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,.8) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            border-bottom: 2px solid white;
+        }
+        
+        .section-padding {
+            padding: 60px 0;
+        }
+        
+        .bg-light-section {
+            background-color: var(--light-color);
+        }
+        
+        .crop-filter {
+            margin-bottom: 30px;
+        }
+        
+        .crop-filter button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .expert-contact {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .section-image {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .section-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-caption h1 {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1rem;
+            }
+            
+            .carousel-item {
+                height: 400px;
+            }
+            
+            .section-padding {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-flower1"></i> AgriHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#guides">Farming Guides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#crops">Crop Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pest-control">Pest Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <section id="home">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background-image: url('https://picsum.photos/seed/agriculture1/1600/600.jpg');">
+                    <div class="carousel-caption">
+                        <h1>Agricultural Information Hub</h1>
+                        <p class="lead">Your comprehensive resource for farming knowledge, crop information, and pest control strategies</p>
+                        <a href="#guides" class="btn btn-primary btn-lg mt-3">Explore Resources</a>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url('img/Slider2.jpg');">
+                    <div class="carousel-caption">
+                        <h1>Expert Farming Guidance</h1>
+                        <p class="lead">Access detailed guides and tutorials from agricultural experts</p>
+                        <a href="#guides" class="btn btn-primary btn-lg mt-3">View Guides</a>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background-image: url('img/Slider3.jpg');">
+                    <div class="carousel-caption">
+                        <h1>Sustainable Farming Solutions</h1>
+                        <p class="lead">Learn modern techniques for productive and sustainable agriculture</p>
+                        <a href="#crops" class="btn btn-primary btn-lg mt-3">Discover Crops</a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Sections -->
+    <section class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Featured Resources</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <img src="img/img1.jpg" class="card-img-top" alt="Farming Guides">
+                        <div class="card-body">
+                            <h5 class="card-title">Farming Guides</h5>
+                            <p class="card-text">Comprehensive guides and tutorials covering various aspects of farming practices, techniques, and methodologies.</p>
+                            <a href="#guides" class="btn btn-sm btn-primary">Explore Guides</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <img src="img/img2.jpg" class="card-img-top" alt="Crop Details">
+                        <div class="card-body">
+                            <h5 class="card-title">Crop Details</h5>
+                            <p class="card-text">Detailed information on different crops including varieties, cultivation methods, soil requirements, and harvesting techniques.</p>
+                            <a href="#crops" class="btn btn-sm btn-primary">View Crops</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card">
+                        <img src="img/img3.jpg" class="card-img-top" alt="Pest Control">
+                        <div class="card-body">
+                            <h5 class="card-title">Pest Control Strategies</h5>
+                            <p class="card-text">Integrated pest management strategies including biological controls and organic remedies for effective pest control.</p>
+                            <a href="#pest-control" class="btn btn-sm btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farming Guides Section -->
+    <section id="guides" class="section-padding bg-light-section">
+        <div class="container">
+            <h2 class="section-title">Farming Guides</h2>
+            
+            <div class="section-image">
+                <img src="img/img4.jpg" alt="Farming Guides">
+            </div>
+            
+            <p class="lead mb-5">Collection of guides and tutorials covering various aspects of farming practices, techniques, and methodologies.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>By Crop Type</h4>
+                    <div class="guide-item">
+                        <h6>Cereal Crops</h6>
+                        <p>Guides for growing wheat, rice, corn, and other cereal crops.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Vegetable Farming</h6>
+                        <p>Comprehensive guides for growing various vegetables.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Fruit Cultivation</h6>
+                        <p>Techniques for growing different types of fruits.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>By Season</h4>
+                    <div class="guide-item">
+                        <h6>Spring Farming</h6>
+                        <p>Best practices for spring planting and cultivation.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Summer Farming</h6>
+                        <p>Techniques for managing crops during hot weather.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Winter Preparation</h6>
+                        <p>Preparing your farm for the winter season.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>By Farming Method</h4>
+                    <div class="guide-item">
+                        <h6>Organic Farming</h6>
+                        <p>Sustainable and organic farming practices.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Hydroponics</h6>
+                        <p>Soil-less farming techniques and systems.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="guide-item">
+                        <h6>Conservation Agriculture</h6>
+                        <p>Environmentally friendly farming approaches.</p>
+                        <a href="#" class="text-primary">View Guides <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <h4>Featured Guide</h4>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Complete Guide to Sustainable Rice Cultivation</h5>
+                        <p class="card-text">This comprehensive guide covers everything you need to know about sustainable rice cultivation, from seed selection to harvesting. Learn about water management techniques, organic pest control, and best practices for maximizing yield while minimizing environmental impact.</p>
+                        <a href="#" class="btn btn-primary">Read Full Guide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop Details Section -->
+    <section id="crops" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Crop Details</h2>
+            
+            <div class="section-image">
+                <img src="img/img5.jpg" alt="Crop Field">
+            </div>
+            
+            <p class="lead mb-5">Comprehensive information on different crops including varieties, cultivation methods, soil requirements, and harvesting techniques.</p>
+            
+            <div class="crop-filter">
+                <button class="btn btn-outline-primary active" data-filter="all">All Crops</button>
+                <button class="btn btn-outline-primary" data-filter="grains">Grains</button>
+                <button class="btn btn-outline-primary" data-filter="vegetables">Vegetables</button>
+                <button class="btn btn-outline-primary" data-filter="fruits">Fruits</button>
+                <button class="btn btn-outline-primary" data-filter="cash-crops">Cash Crops</button>
+            </div>
+            
+            <div class="row" id="crop-container">
+                <!-- Grains -->
+                <div class="col-md-3 mb-4 crop-item" data-category="grains">
+                    <div class="card crop-card">
+                        <img src="img/Wheat.jpg" class="card-img-top" alt="Wheat">
+                        <div class="card-body">
+                            <h5 class="card-title">Wheat</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Durum, Spelt, Emmer</p>
+                            <p class="card-text"><strong>Soil:</strong> Well-drained loamy soil</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="grains">
+                    <div class="card crop-card">
+                        <img src="img/Rice.jpg" class="card-img-top" alt="Rice">
+                        <div class="card-body">
+                            <h5 class="card-title">Rice</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Basmati, Jasmine, Arborio</p>
+                            <p class="card-text"><strong>Soil:</strong> Clay or clay loam</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="grains">
+                    <div class="card crop-card">
+                        <img src="img/Corn.jpg" class="card-img-top" alt="Corn">
+                        <div class="card-body">
+                            <h5 class="card-title">Corn</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Sweet, Dent, Flint</p>
+                            <p class="card-text"><strong>Soil:</strong> Fertile, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vegetables -->
+                <div class="col-md-3 mb-4 crop-item" data-category="vegetables">
+                    <div class="card crop-card">
+                        <img src="img/Tomato.jpg" class="card-img-top" alt="Tomato">
+                        <div class="card-body">
+                            <h5 class="card-title">Tomato</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Beefsteak, Cherry, Roma</p>
+                            <p class="card-text"><strong>Soil:</strong> Well-drained, fertile</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="vegetables">
+                    <div class="card crop-card">
+                        <img src="img/Potato.jpg" class="card-img-top" alt="Potato">
+                        <div class="card-body">
+                            <h5 class="card-title">Potato</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Russet, Red, Yukon Gold</p>
+                            <p class="card-text"><strong>Soil:</strong> Sandy loam, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="vegetables">
+                    <div class="card crop-card">
+                        <img src="img/Carrot.jpg" class="card-img-top" alt="Carrot">
+                        <div class="card-body">
+                            <h5 class="card-title">Carrot</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Nantes, Imperator, Chantenay</p>
+                            <p class="card-text"><strong>Soil:</strong> Deep, loose, rock-free</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fruits -->
+                <div class="col-md-3 mb-4 crop-item" data-category="fruits">
+                    <div class="card crop-card">
+                        <img src="img/Apple.jpg" class="card-img-top" alt="Apple">
+                        <div class="card-body">
+                            <h5 class="card-title">Apple</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Fuji, Gala, Granny Smith</p>
+                            <p class="card-text"><strong>Soil:</strong> Well-drained, fertile</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="fruits">
+                    <div class="card crop-card">
+                        <img src="img/Orange.jpg" class="card-img-top" alt="Orange">
+                        <div class="card-body">
+                            <h5 class="card-title">Orange</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Navel, Valencia, Blood</p>
+                            <p class="card-text"><strong>Soil:</strong> Sandy loam, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="fruits">
+                    <div class="card crop-card">
+                        <img src="img/Grapes.jpg" class="card-img-top" alt="Grapes">
+                        <div class="card-body">
+                            <h5 class="card-title">Grapes</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Thompson, Concord, Cabernet</p>
+                            <p class="card-text"><strong>Soil:</strong> Deep, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cash Crops -->
+                <div class="col-md-3 mb-4 crop-item" data-category="cash-crops">
+                    <div class="card crop-card">
+                        <img src="img/Cotton.jpg" class="card-img-top" alt="Cotton">
+                        <div class="card-body">
+                            <h5 class="card-title">Cotton</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Upland, Pima, Egyptian</p>
+                            <p class="card-text"><strong>Soil:</strong> Deep, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="cash-crops">
+                    <div class="card crop-card">
+                        <img src="img/Coffee.jpg" class="card-img-top" alt="Coffee">
+                        <div class="card-body">
+                            <h5 class="card-title">Coffee</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Arabica, Robusta, Liberica</p>
+                            <p class="card-text"><strong>Soil:</strong> Volcanic, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4 crop-item" data-category="cash-crops">
+                    <div class="card crop-card">
+                        <img src="img/Cocoa.jpg" class="card-img-top" alt="Cocoa">
+                        <div class="card-body">
+                            <h5 class="card-title">Cocoa</h5>
+                            <p class="card-text"><strong>Varieties:</strong> Criollo, Forastero, Trinitario</p>
+                            <p class="card-text"><strong>Soil:</strong> Rich, well-drained</p>
+                            <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pest Control Strategies Section -->
+    <section id="pest-control" class="section-padding bg-light-section">
+        <div class="container">
+            <h2 class="section-title">Pest Control Strategies</h2>
+            
+            <div class="section-image">
+                <img src="img/Slider2.jpg" alt="Pest Control">
+            </div>
+            
+            <p class="lead mb-5">Integrated pest management strategies including biological controls and organic remedies for effective pest control.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="pest-control-card">
+                        <h4><i class="bi bi-bug-fill text-primary"></i> Integrated Pest Management (IPM)</h4>
+                        <p>IPM is an effective and environmentally sensitive approach to pest management that relies on a combination of common-sense practices.</p>
+                        <ul>
+                            <li>Identification and monitoring of pests</li>
+                            <li>Prevention through cultural practices</li>
+                            <li>Biological control methods</li>
+                            <li>Responsible use of pesticides</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pest-control-card">
+                        <h4><i class="bi bi-shield-check text-primary"></i> Biological Controls</h4>
+                        <p>Using natural enemies to control pest populations is an environmentally friendly alternative to chemical pesticides.</p>
+                        <ul>
+                            <li>Predatory insects (ladybugs, lacewings)</li>
+                            <li>Parasitic wasps</li>
+                            <li>Nematodes for soil-dwelling pests</li>
+                            <li>Bacterial and fungal biopesticides</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="pest-control-card">
+                        <h4><i class="bi bi-flower1 text-primary"></i> Organic Remedies</h4>
+                        <p>Natural and organic solutions to manage pest problems without synthetic chemicals.</p>
+                        <ul>
+                            <li>Neem oil for insect control</li>
+                            <li>Diatomaceous earth for crawling insects</li>
+                            <li>Garlic and pepper sprays as repellents</li>
+                            <li>Companion planting strategies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pest-control-card">
+                        <h4><i class="bi bi-search text-primary"></i> Monitoring and Early Detection</h4>
+                        <p>Regular monitoring and early detection are key to preventing severe pest infestations.</p>
+                        <ul>
+                            <li>Regular field scouting</li>
+                            <li>Using pheromone traps</li>
+                            <li>Weather-based pest forecasting</li>
+                            <li>Record keeping and analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <h4>Common Pests and Solutions</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Pest</th>
+                                <th>Crops Affected</th>
+                                <th>Control Methods</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Aphids</td>
+                                <td>Various vegetables, fruits</td>
+                                <td>Ladybugs, neem oil, insecticidal soap</td>
+                            </tr>
+                            <tr>
+                                <td>Armyworms</td>
+                                <td>Corn, rice, small grains</td>
+                                <td>Bacillus thuringiensis (Bt), parasitic wasps</td>
+                            </tr>
+                            <tr>
+                                <td>Whiteflies</td>
+                                <td>Tomatoes, cucumbers, cotton</td>
+                                <td>Yellow sticky traps, parasitic wasps, neem oil</td>
+                            </tr>
+                            <tr>
+                                <td>Spider Mites</td>
+                                <td>Beans, tomatoes, strawberries</td>
+                                <td>Predatory mites, increased humidity, neem oil</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Contact Agricultural Experts</h2>
+            
+            
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inquiry-type" class="form-label">Type of Inquiry</label>
+                                <select class="form-select" id="inquiry-type" required>
+                                    <option value="" selected disabled>Select an option</option>
+                                    <option value="general">General Information</option>
+                                    <option value="crop-disease">Crop Disease Identification</option>
+                                    <option value="pest-control">Pest Control Advice</option>
+                                    <option value="farming-techniques">Farming Techniques</option>
+                                    <option value="soil-management">Soil Management</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="attachment" class="form-label">Attachment (Optional)</label>
+                                <input class="form-control" type="file" id="attachment">
+                                <div class="form-text">You can share images or documents that might help with your inquiry.</div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+                            </div>
+                        </form>
+                        
+                        <div class="alert alert-success mt-3 d-none" id="successMessage">
+                            Your inquiry has been submitted successfully! An agricultural expert will contact you soon.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="expert-contact">
+                        <h4>Agricultural Extension Services</h4>
+                        <p>For immediate assistance, contact your local agricultural extension services:</p>
+                        
+                        <div class="mb-3">
+                            <h5><i class="bi bi-telephone-fill"></i> Phone</h5>
+                            <p>+1 (800) 555-1234<br>Mon-Fri: 8:00 AM - 5:00 PM</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5><i class="bi bi-envelope-fill"></i> Email</h5>
+                            <p>support@agrihub.com<br>experts@agrihub.com</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5><i class="bi bi-geo-alt-fill"></i> Office Location</h5>
+                            <p>123 Agriculture Lane<br>Farmville, AG 12345</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5><i class="bi bi-clock-fill"></i> Office Hours</h5>
+                            <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 1:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>AgriHub</h5>
+                    <p>Your comprehensive resource for farming knowledge, crop information, and pest control strategies.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#guides">Farming Guides</a></li>
+                        <li><a href="#crops">Crop Details</a></li>
+                        <li><a href="#pest-control">Pest Control</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe to our newsletter for the latest farming tips and updates.</p>
+                    <form class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 AgriHub || Developed By WebDevTaslima || All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Crop filter functionality
+        document.querySelectorAll('.crop-filter button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.crop-filter button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const cropItems = document.querySelectorAll('.crop-item');
+                
+                cropItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            document.getElementById('successMessage').classList.remove('d-none');
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.add('d-none');
+            }, 5000);
+        });
+        
+        // Update active nav link on scroll
+        window.addEventListener('scroll', function() {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
